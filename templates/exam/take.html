@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Test topshirish{% endblock %}
+
+{% block content %}
+    <h2>Test topshirish</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Test topshirish</button>
+    </form>
+{% endblock %}

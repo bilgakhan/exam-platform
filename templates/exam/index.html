@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Online Test{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Exam</h1>
+    <p><a href="{% url 'exam-take' %}" class="btn btn-primary btn-lg">Imtihon topshirish</a></p>
+    <div class="pt-4"></div>
+    <p><a href="{% url 'exam-question' 1 %}" class="btn btn-secondary">Ohirgini imtihonni davom etish</a></p>
+    <p><a href="{% url 'exam-history' %}" class="btn btn-secondary">Tarix</a></p>
+{% endblock %}

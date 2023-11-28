@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Test natijalari{% endblock %}
+
+{% block content %}
+    <h3>{{ exam.course.name }}</h3>
+    <h4>{{ corrects }}/{{ questions|length }} - {{ score }}</h4>
+    <p>{{ exam.student.first_name }} {{ exam.student.last_name }}</p>
+    <div class="btn-group mt-3 mb-3 d-flex flex-wrap" role="group">
+        {% for question in questions %}
+            <div class="m-1">
+                {% if question.correct %}
+                    <a class="btn btn-success">{{ question.number }}</a>
+                {% else %}
+                    <a class="btn btn-danger">{{ question.number }}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

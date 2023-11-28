@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Online test{% endblock %}
+
+{% block content %}
+    <div class="d-grid gap-2">
+        {% if user.is_authenticated %}
+            <h2 class="mt-5 mb-5 text-center">Salom, {{ user.username }}</h2>
+        {% else %}
+            <h2 class="mt-5 mb-5 text-center">Attestatsiya Online</h2>
+        {% endif %}
+        {% if user.is_superuser %}
+            <a href="{% url 'exam-history-all' %}" class="mt-5 mb-3 btn btn-secondary btn-lg p-3 col-10 m-auto">Umumiy tarix</a>
+
+            <a href="{% url 'admin:courses_question_changelist' %}" class="mb-3 btn btn-secondary btn-lg p-3 col-10 m-auto">Users</a>
+
+            <a href="{% url 'admin:courses_course_changelist' %}" class="mb-3 btn btn-secondary btn-lg p-3 col-10 m-auto">Fanlar</a>
+            <a href="{% url 'admin:courses_question_changelist' %}" class="mb-3 btn btn-secondary btn-lg p-3 col-10 m-auto">Savollar</a>
+        {% elif user.is_authenticated %}
+            <div class="mt-5 row">
+                <a href="{% url 'exam-take' %}" class="mb-5 btn btn-primary btn-lg p-3 col-10 mb-3 m-auto">Imtihon topshirish</a>
+                <a href="{% url 'exam-history' %}" class="mb-5 btn btn-secondary btn-lg p-3 col-10 mt-3 m-auto">Tarix</a>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}" class="mt-5 mb-5 btn btn-primary btn-lg p-3 col-10 m-auto">Kirish</a>
+            <a href="{% url 'signup' %}" class="btn mb-5 btn-secondary btn-lg p-3 col-10 m-auto">Ro'yhatdan o'tish</a>
+        {% endif %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.halo.min.js"></script>
+    <script>
+        VANTA.HALO({
+            el: "#content",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            backgroundColor: 0x212529,
+            amplitudeFactor: 2.00
+        });
+    </script>
+{% endblock %}

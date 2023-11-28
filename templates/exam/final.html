@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Testni yakunlash{% endblock %}
+
+{% block content %}
+    <h2>Testni yakunlash</h2>
+    <h4>Savollar</h4>
+    <nav aria-label="Questions">
+        <ul class="pagination d-flex flex-wrap">
+            {% for question in exam.questions.all %}
+                {% if question.given_answer %}
+                    <li class="page-item active mb-1">
+                        <a class="page-link" href="{% url 'exam-question' question.number %}">{{ question.number }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item mb-1">
+                        <a class="page-link" href="{% url 'exam-question' question.number %}">{{ question.number }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Testni yakunlash</button>
+    </form>
+{% endblock %}

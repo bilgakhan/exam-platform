@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+    {% for course in object_list %}
+    <p>
+        {% if user.is_teacher %}
+            <a href="{% url 'course' course.id %}">{{ course.name }}</a>
+        {% else %}
+            {{ course.name }}
+        {% endif %}
+        {% endfor %}
+    </p>
+    {% if user.is_teacher %}
+    <div>
+        <a href="{% url 'course-create' %}" class="btn btn-primary">Create course</a>
+    </div>
+    {% endif %}
+{% endblock %}

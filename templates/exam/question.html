@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Test{% endblock %}
+
+{% block content %}
+    <nav aria-label="Questions">
+        <ul class="pagination d-flex flex-wrap">
+            {% for question in questions %}
+                {% if question.number == current.number %}
+                    <li class="page-item disabled mb-1">
+                        <a class="page-link" href="">{{ question.number }}</a>
+                    </li>
+                {% elif question.answered %}
+                    <li class="page-item active mb-1">
+                        <a class="page-link" href="{% url 'exam-question' question.number %}">{{ question.number }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item mb-1">
+                        <a class="page-link" href="{% url 'exam-question' question.number %}">{{ question.number }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    <form method="POST">
+        <h3>{{ current.number }}. {{ current.question }}</h3>
+        {% if current.image_link %}<img src="{{ current.image_link }}">{% endif %}
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Javob berish</button>
+    </form>
+    <p class="text-center mt-3" style="font-size: 5rem;" id="countdown-timer">00:00</p>
+    <script>
+        // Set the target time to be one hour after the given time
+        const targetTime = new Date("{{ started_at|date:"r" }}");
+        targetTime.setHours(targetTime.getHours() + 1);
+
+        // Set up the countdown timer
+        let timer = setInterval(function () {
+            // Calculate the number of seconds left until the target time
+            let secondsLeft = Math.round((targetTime - Date.now()) / 1000);
+
+            const timer = document.querySelector('#countdown-timer');
+
+            // If the target time has been reached, clear the timer
+            if (secondsLeft <= 0) {
+                clearInterval(timer);
+                timer.innerText = 'Vaqt tugadi!';
+            } else {
+                // Calculate the minutes and seconds left
+                let minutes = Math.floor(secondsLeft / 60);
+                let seconds = secondsLeft % 60;
+
+                // Format the time as 'MM:SS'
+                let timeString = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+                // Display the time
+                timer.innerText = timeString;
+            }
+        }, 1000); // Update the countdown every 1 second
+    </script>
+{% endblock %}
